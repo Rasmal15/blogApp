@@ -1,0 +1,24 @@
+<div class="popupContainer" id="popupContainer-{{ replay_comment.id }}">
+    <div id="overlay-{{ replay_comment.id }}" class="overlay hidden"></div>
+        <div id="popupDialog-{{ replay_comment.id }}" class="popupDialog hidden">
+            <button class="close-btn">X</button>
+            <fieldset>
+                <legend>Are you sure you want to delete this?</legend>
+
+                <form method='post'>
+                {% csrf_token %}
+                <div>
+                    <input class="delete-replay" type="radio" id="delete-replay-yes"
+                        name="delete-replay" value="True" data-replay-id='{{ replay_comment.id }}' />
+                    <label for="delete-replay-yes">YES</label>
+                </div>
+                
+                <div>
+                    <input class="delete-replay" type="radio" id="delete-replay-no"
+                        name="delete-replay" value="False" data-replay-id='{{ replay_comment.id }}' />
+                    <label for="delete-replay-no">NO</label>
+                </div>
+                </form>
+            </fieldset>
+        </div>
+    </div>
