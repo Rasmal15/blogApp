@@ -1,0 +1,24 @@
+<div class="popupContainer" id="popupContainer-{{ comment.id }}">
+    <div id="overlay-{{ comment.id }}" class="overlay hidden"></div>
+      <div id="popupDialog-{{ comment.id }}" class="popupDialog hidden">
+        <button class="close-btn">X</button>
+        <fieldset>
+          <legend>Are you sure you want to delete this?</legend>
+
+          <form method='post'>
+            {% csrf_token %}
+            <div>
+              <input class="delete" type="radio" id="delete-comment-yes"
+                    name="delete-comment" value="True" data-comment-id='{{ comment.id }}' />
+              <label for="delete-comment-yes">YES</label>
+            </div>
+          
+            <div>
+              <input class="delete" type="radio" id="delete-comment-no"
+                    name="delete-comment" value="False" data-comment-id='{{ comment.id }}' />
+              <label for="delete-comment-no">NO</label>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+    </div>
