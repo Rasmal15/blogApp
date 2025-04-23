@@ -1,6 +1,14 @@
 from django.contrib import admin
-from . models import *
+from . models import ProfileData
+
+
 
 # Register your models here.
 
-admin.site.register(Comment)
+class RegisteredUserProfile(admin.ModelAdmin):
+    list_display = ('user','name','profile_picture')
+    
+    search_fields = ['name']
+    
+
+admin.site.register(ProfileData,RegisteredUserProfile)

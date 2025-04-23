@@ -6,7 +6,29 @@ from django.conf import settings
 from django.core.mail import send_mail
 import json
 from django.http import JsonResponse
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from .serializer import UserSerializer
+from postApp.models import Posts
+from postApp.serializer import PostsSerializer
+
+
 # Create your views here.
+
+class UserInfoView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        print('hello')
+        user = UserProfile.objects.all()
+        user_data = UserSerializer(user)
+        response_data = {
+            'user' : user_data.data,
+        }
+        return Response(response_data)
+
 
 def userCreation(request):
     user = None

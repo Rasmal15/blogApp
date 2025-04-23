@@ -1,10 +1,18 @@
 from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from profileApp.models import Posts,ProfileData,Comment,ReplayComment
+from profileApp.models import ProfileData
+from commentApp.models import Comment
+from replayApp.models import ReplayComment
 from userApp.models import UserProfile
 from django.http import JsonResponse
 from django.utils import timezone
-from profileApp.serializers import PostsSerializer
+from rest_framework.views import APIView
+from userApp.serializer import UserSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_simplejwt.authentication import JWTAuthentication
+from postApp.models import Posts
+from postApp.serializer import PostsSerializer
 
 # Create your views here.
 
@@ -79,3 +87,18 @@ def viewProfileFunction(request):
                                                          'now' : now, 'liked_comments' : liked_comments})
     else:
         return redirect('profile')
+       
+class HomeView(APIView):
+    authentication_classes = [JWTAuthentication]
+    permission_classes = [IsAuthenticated]
+    def get(self,request):
+        user = UserProfile.objects.get(username = request.user)
+        posts = Posts.objects.filter(user = user.id)
+        user_serialier = UserSerializer(user)
+        posts_serializer = PostsSerializer(posts, many=True)
+        respone_data = {
+            'user' : user_serialier.data,
+            'posts' : posts_serializer.data
+        }
+        return Response(respone_data)
+        

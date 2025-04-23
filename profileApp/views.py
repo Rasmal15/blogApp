@@ -5,7 +5,11 @@ from userApp.models import UserProfile
 from django.http import JsonResponse
 import json
 from django.contrib.auth.decorators import login_required
-from . serializers import PostsSerializer,CommentSerializer
+from commentApp.serializer import CommentSerializer
+from commentApp.models import Comment
+from replayApp.models import ReplayComment
+from postApp.models import Posts
+from postApp.serializer import PostsSerializer
 
 # Create your views here.
 
@@ -63,7 +67,6 @@ def createNewPost(request):
 def viewSinglePost(request,id):
     user = UserProfile.objects.get(username = request.user)
     single_post = Posts.objects.get(id = id)
-    form = CommentForm()
     like_conut = single_post.likes.count()
     comments = Comment.objects.filter(post = single_post)
     liked_comments = user.liked_comment.all()

@@ -1,5 +1,6 @@
 from django import forms
 from . models import *
+from postApp.models import Posts
 
 class ProfileForm(forms.ModelForm):
     class Meta:
@@ -14,8 +15,5 @@ class PostForm(forms.ModelForm):
             "description"
         ]
         
-class CommentForm(forms.ModelForm):
-    class Meta:
-        model = Comment
-        fields = ["comment"]
+
         

@@ -18,10 +18,17 @@ from django.contrib import admin
 from django.urls import path,include
 from django.conf import settings
 from django.conf.urls.static import static
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('users/',include('userApp.urls')),
     path('',include('homeApp.urls')),
-    path('profile/', include('profileApp.urls'))
+    path('profile/', include('profileApp.urls')),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'), 
+    path('post/',include('postApp.urls')),
+    path('comment/',include('commentApp.urls')),
+    path('replay/',include('replayApp.urls'))
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
