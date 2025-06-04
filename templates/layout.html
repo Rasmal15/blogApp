@@ -1,0 +1,38 @@
+{% load static %}   
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+
+        <!-- In the <head> section -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+        <link href="{% static 'css/profile.css' %}" rel="stylesheet">
+        <link rel="stylesheet" href="{% static 'css/delete_comment.css' %}">
+        {% block stylesheets %}{% endblock %}
+
+    </head>
+    <body>
+        {% block nav %}{% endblock %}
+        {% block body %}{% endblock %}
+            
+        
+        <!-- Just before the closing </body> tag -->
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        {% block javascripts %}
+            <script src="{% static 'javascript/like.js' %}"></script>
+            <script src="{% static 'javascript/replay_comment.js' %}"></script>
+            <script src="{% static 'javascript/delete_comment.js' %}"></script>
+            <script src="{% static 'javascript/like_comment.js' %}"></script>
+            <script src="{% static 'javascript/comment.js' %}"></script>
+        {% endblock %}
+    </body>
+</html>
