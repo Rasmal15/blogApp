@@ -93,7 +93,7 @@ class HomeView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self,request):
         user = UserProfile.objects.get(username = request.user)
-        posts = Posts.objects.filter(user = user.id)
+        posts = Posts.objects.exclude(user = user.id)
         user_serialier = UserSerializer(user)
         posts_serializer = PostsSerializer(posts, many=True)
         respone_data = {
