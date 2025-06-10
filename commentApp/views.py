@@ -32,7 +32,7 @@ class CommentOnPostView(APIView):
             'comment' : comment_serializer.data,
             'status' : status_code
         }
-        return Response(response_data)
+        return JsonResponse(response_data)
     
     def commentLikeFunction(self, request):
         if request.method == 'POST':
@@ -58,9 +58,23 @@ class CommentOnPostView(APIView):
             
     def delete(self, request, *args, **kwargs) :
         user = UserProfile.objects.get(username = request.user)
-        print(request)
-        print(kwargs.get('id'))
-        
+        commentToDelete = Comment.objects.get(id = kwargs.get('id'))
+        if user == commentToDelete.user:
+            if request.data == 'True':
+                commentToDelete.delete()
+                response_data = {
+                    'status' : 'success',
+                }
+                return JsonResponse(response_data)
+            else:
+                response_data = {
+                    'status' : 'false'
+                }
+                return JsonResponse(response_data) 
+        else:
+            return JsonResponse({
+                'message' : 'You do not have the permission to delete this comment'
+            })  
         
     def dispatch(self, request, *args, **kwargs):
         if request.path_info == '/comment/comment/like' and request.method == 'POST':
